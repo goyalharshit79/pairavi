@@ -25,8 +25,9 @@ export function urgency(date, today, kind) {
   return "later";
 }
 
-export function deadline({ id, label, date, kind, source, detail = "" }, today) {
-  return { id, label, date, kind, source, detail, status: urgency(date, today, kind), days: daysBetween(today, date) };
+export function deadline({ id, label, date, kind, source, detail = "", met = false }, today) {
+  const status = met ? "met" : urgency(date, today, kind);
+  return { id, label, date, kind, source, detail, status, days: daysBetween(today, date) };
 }
 
 // Events sorted oldest first; ties keep entry order.

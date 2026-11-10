@@ -146,7 +146,7 @@ export default {
     if (fa) {
       const faaDue = addDays(fa.date, FAA_DAYS);
       const faaMax = addDays(fa.date, FAA_MAX_DAYS);
-      d.push(deadline({ id: "faa", label: "First Appellate Authority must decide", date: faaDue, kind: KIND.THEIRS, source: "rti-19-6", detail: "Can extend to 45 days with written reasons." }, today));
+      d.push(deadline({ id: "faa", label: "First Appellate Authority must decide", date: faaDue, kind: KIND.THEIRS, met: Boolean(faa) && compare(faa.date, faaDue) <= 0, source: "rti-19-6", detail: "Can extend to 45 days with written reasons." }, today));
       if (faa && faa.outcome === "full") {
         return { done: true, rung: 4, headline: "Appeal allowed", explain: "Follow up if the information doesn't arrive within the time the order sets. If it doesn't, you can still go to the Commission." };
       }
@@ -188,7 +188,7 @@ export default {
     }
 
     const due = replyDueDate(cc, filed, transfer);
-    d.push(deadline({ id: "reply", label: cc.lifeLiberty ? "PIO must reply (48 hours)" : "PIO must reply", date: due, kind: KIND.THEIRS, source: cc.thirdParty ? "rti-11" : cc.viaApio ? "rti-5-2" : "rti-7-1" }, today));
+    d.push(deadline({ id: "reply", label: cc.lifeLiberty ? "PIO must reply (48 hours)" : "PIO must reply", date: due, kind: KIND.THEIRS, met: Boolean(reply) && compare(reply.date, due) <= 0, source: cc.thirdParty ? "rti-11" : cc.viaApio ? "rti-5-2" : "rti-7-1" }, today));
 
     const faFrom = reply ? reply.date : due;
     const faBy = addDays(faFrom, FIRST_APPEAL_DAYS);

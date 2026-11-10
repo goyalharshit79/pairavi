@@ -176,3 +176,14 @@ test("action letters exist in their playbook", () => {
   }
   assert.equal(KIND.YOURS, "yours");
 });
+
+test("a deadline the other side met is marked done, not late", () => {
+  const c = { events: [
+    { type: "complained", date: "2026-10-01" },
+    { type: "reply", date: "2026-10-10", outcome: "rejected" },
+  ] };
+  const r = run("insurance", c, "2026-11-10");
+  assert.equal(find(r, "insurer").status, "met");
+  const bank = run("bank", c, "2026-11-10");
+  assert.equal(find(bank, "reply").status, "met");
+});

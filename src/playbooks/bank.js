@@ -165,7 +165,7 @@ export default {
     const fileBy = addDays(windowStart, OMBUDSMAN_WINDOW);
     const opensOn = reply ? reply.date : addDays(replyDue, 1);
 
-    d.push(deadline({ id: "reply", label: "Bank's reply due", date: replyDue, kind: KIND.THEIRS, source: "rbi-10-1-f", detail: "RBI, NPCI or card-network rules may give them longer for some disputes; the longer period applies." }, today));
+    d.push(deadline({ id: "reply", label: "Bank's reply due", date: replyDue, kind: KIND.THEIRS, met: Boolean(reply), source: "rbi-10-1-f", detail: "RBI, NPCI or card-network rules may give them longer for some disputes; the longer period applies." }, today));
     d.push(deadline({ id: "opens", label: "You can file with the RBI Ombudsman", date: opensOn, kind: KIND.OPENS, source: "rbi-10-1-f" }, today));
     d.push(deadline({ id: "file", label: "Last day to file with the RBI Ombudsman", date: fileBy, kind: KIND.YOURS, source: "rbi-10-1-g", detail: "90 days from the end of the bank's 30-day reply period, or from their last communication, whichever is later." }, today));
 
@@ -241,6 +241,7 @@ export default {
         return {
           subject: `Complaint against ${or(c.party, "bank")} under RB-IOS 2026`,
           body: paras(
+            "Complaint under the Reserve Bank – Integrated Ombudsman Scheme, 2026 (RB-IOS 2026)",
             `Complaint against: ${or(c.party, "Bank / NBFC / payment app")}`,
             c.account ? `Account / card / loan: ${c.account}` : "",
             "Facts of the complaint:",

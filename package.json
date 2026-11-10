@@ -8,7 +8,7 @@
     "start": "node scripts/serve.mjs",
     "test": "node --test",
     "build": "node scripts/build.mjs",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "npm run build && NODE_PATH=$(npm root -g) node scripts/smoke.mjs"
   },
   "engines": {
     "node": ">=20"

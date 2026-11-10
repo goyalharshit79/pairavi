@@ -80,6 +80,7 @@ export default {
     },
     {
       title: "National Consumer Helpline",
+      optional: "nch",
       detail: "Free. NCH passes your grievance to the company, and many companies settle at this stage. It cannot order a refund. Call 1915 or WhatsApp 8800001915.",
       source: "nch",
       channels: [
@@ -90,6 +91,7 @@ export default {
     },
     {
       title: "Optional: legal notice",
+      optional: "notice",
       detail: "Not required by law, but a firm written demand with a deadline often settles it, and shows the Commission you gave them a chance.",
       source: null,
     },
@@ -169,8 +171,8 @@ export default {
 
     const waitUntil = c.online ? addMonths(complained.date, 1) : addDays(complained.date, OTHER_WAIT_DAYS);
     if (c.online) {
-      d.push(deadline({ id: "ack", label: "Platform must acknowledge your complaint", date: addDays(complained.date, 2), kind: KIND.THEIRS, source: "ecom-4-5" }, today));
-      d.push(deadline({ id: "redress", label: "Platform must resolve your complaint", date: waitUntil, kind: KIND.THEIRS, source: "ecom-4-5" }, today));
+      d.push(deadline({ id: "ack", label: "Platform must acknowledge your complaint", date: addDays(complained.date, 2), kind: KIND.THEIRS, met: Boolean(reply), source: "ecom-4-5" }, today));
+      d.push(deadline({ id: "redress", label: "Platform must resolve your complaint", date: waitUntil, kind: KIND.THEIRS, met: Boolean(reply) && reply.outcome === "resolved", source: "ecom-4-5" }, today));
     }
 
     if (!reply && compare(today, waitUntil) <= 0 && !nch && !notice) {

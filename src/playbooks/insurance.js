@@ -82,6 +82,7 @@ export default {
     },
     {
       title: "Optional: raise it on Bima Bharosa",
+      optional: "bimabharosa",
       detail: "IRDAI's portal sends your complaint to the insurer and tracks it. It does not decide claims, and you don't need it to reach the Ombudsman. Call 155255.",
       source: "irdai-bima-bharosa",
       channels: [
@@ -183,7 +184,7 @@ export default {
     const noReplyOpens = addDays(addMonths(received, 1), 1);
     const fileBy = reply ? addYears(reply.date, 1) : addYears(addMonths(complained.date, 1), 1);
 
-    d.push(deadline({ id: "insurer", label: "Insurer should resolve with reasons", date: insurerDue, kind: KIND.THEIRS, source: "irdai-grievance-14" }, today));
+    d.push(deadline({ id: "insurer", label: "Insurer should resolve with reasons", date: insurerDue, kind: KIND.THEIRS, met: Boolean(reply) && compare(reply.date, insurerDue) <= 0, source: "irdai-grievance-14" }, today));
     if (!reply) d.push(deadline({ id: "opens", label: "Ombudsman opens if they still haven't replied", date: noReplyOpens, kind: KIND.OPENS, source: "ios-14-3-a" }, today));
     d.push(deadline({ id: "file", label: "Last day to file with the Insurance Ombudsman", date: fileBy, kind: KIND.YOURS, source: "ios-14-3-b", detail: reply ? "One year from the insurer's reply." : "One year after the insurer's one month to reply ran out." }, today));
 
