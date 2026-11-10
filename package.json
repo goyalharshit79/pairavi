@@ -1,0 +1,19 @@
+{
+  "name": "pairavi",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An advocate that doesn't get tired: your next move, the drafted letter and every deadline for a dispute with a bank, insurer, seller or public office in India.",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test",
+    "build": "node scripts/build.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
